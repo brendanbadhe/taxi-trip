@@ -1,6 +1,11 @@
 from pyspark.sql import SparkSession
 
-spark = SparkSession.builder.appName("csv_to_parquet").getOrCreate()
+spark = (
+    SparkSession.builder.config("spark.executor.memory", "10g")
+    .config("spark.driver.memory", "10g")
+    .appName("csv_to_parquet")
+    .getOrCreate()
+)
 df1 = spark.read.csv(
     "datasets/yellow_tripdata_2015-01.csv", header=True, inferSchema=True
 )
